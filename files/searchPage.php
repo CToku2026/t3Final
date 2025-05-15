@@ -67,18 +67,22 @@
 
       $q = $_GET["searchQuery"];
 
-      Print "<div class='searchTitle'>Searching for&nbsp;<div> ".$q." </div>...</div>";
-
       $sql = "SELECT * FROM items WHERE name LIKE '%".$q."%'";
       $statement = $conn -> query($sql);
-      print "<div class='options'>";
-      foreach($statement as $row){
-        print "<a href='itemPage.php?product=".$row["itemId"]."'><div class='itemBox'>";
-        print "<div><img src='images/".$row["image"]."' width='40%' style='border: 4px inset black'></div>";
-        print "<div><a href='itemPage.php?product=".$row["itemId"]."'>".$row["name"]."</a></div>";
-        print "</div></a>";
+      $count = $statement -> rowCount();
+      if($count > 0){
+        Print "<div class='searchTitle'>Searching for&nbsp;<div> ".$q." </div>...</div>";
+        print "<div class='options'>";
+        foreach($statement as $row){
+          print "<a href='itemPage.php?product=".$row["itemId"]."'><div class='itemBox'>";
+          print "<div><img src='images/".$row["image"]."' width='40%' style='border: 4px inset black'></div>";
+          print "<div><a href='itemPage.php?product=".$row["itemId"]."'>".$row["name"]."</a></div>";
+          print "</div></a>";
+        }
+        print "</div>";
+      } else {
+        Print "<div class='searchTitle'>No Racing Found Here...</div>";
       }
-      print "</div>";
 
       }
       catch(PDOException $e) {
