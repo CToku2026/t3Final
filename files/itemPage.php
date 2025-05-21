@@ -21,7 +21,7 @@
 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        if($_SESSION["username"] != "" && $_SESSION["loginData"] == true){
+        if(array_key_exists("username", $_SESSION) && $_SESSION["username"] != "" && $_SESSION["loginData"] == true){
           $un = $_SESSION["username"];
           $loggedIn = $_SESSION["loginData"];
           $sql = "SELECT * FROM users JOIN userCart ON users.username = '$un' AND users.userId = userCart.userId JOIN cartItem ON userCart.cartId = cartItem.cartId";
@@ -120,6 +120,15 @@
             print "<div class='itemPrice'>Please choose location</div>";
           }
           print "</form>";
+          $sql = "SELECT * FROM userCart JOIN users ON userCart.userId = users.userId AND users.username = '$un'";
+          $statement = $conn -> query($sql);
+          $userCart = $statement -> fetch();
+          $count = $statement -> rowCount();
+          if($count == 0){
+            $unId = get_id($un, $conn);
+            $sql = "INSERT INTO userCart (userId) VALUES ('$unId')";
+            $conn -> exec($sql);
+          }
         } else {
           if ($storeChosen != ""){
             print "<a href='login.php' class='itemButtonFalse'>Add to Cart</a>";
@@ -127,12 +136,23 @@
             print "<div class='itemPrice'>Please choose location</div>";
           }
         }
+        $sql = "SELECT * FROM items WHERE itemId = '$id'";
+        $statement = $conn -> query($sql);
+
+        $statement = $statement -> fetch();
         print "<div class='itemDesc'>".$statement["description"]."</div>";
         print "</div>";
         print "</div><br>";
       }
       catch(PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
+      }
+
+      function get_id($name, $conn){
+        $sql = "SELECT userId FROM users WHERE username='$name'";
+        $statement = $conn -> query($sql);
+        $row = $statement -> fetch();
+        return $row["userId"];
       }
     ?>
     <script src="script.js">

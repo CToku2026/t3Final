@@ -21,7 +21,7 @@
 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        if($_SESSION["username"] != "" && $_SESSION["loginData"] == true){
+        if(array_key_exists("username", $_SESSION) && $_SESSION["username"] != "" && $_SESSION["loginData"] == true){
         $un = $_SESSION["username"];
         $loggedIn = $_SESSION["loginData"];
         $sql = "SELECT * FROM users JOIN userCart ON users.username = '$un' AND users.userId = userCart.userId JOIN cartItem ON userCart.cartId = cartItem.cartId";

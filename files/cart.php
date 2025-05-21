@@ -21,7 +21,7 @@
 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        if($_SESSION["username"] != "" && $_SESSION["loginData"] == true){
+        if(array_key_exists("username", $_SESSION) && $_SESSION["username"] != "" && $_SESSION["loginData"] == true){
           $un = $_SESSION["username"];
           $loggedIn = $_SESSION["loginData"];
           $sql = "SELECT * FROM users JOIN userCart ON users.username = '$un' AND users.userId = userCart.userId JOIN cartItem ON userCart.cartId = cartItem.cartId";
@@ -62,6 +62,8 @@
         $iId = $_POST["itemId"];
         $sId = $_POST["storeId"];
 
+
+
         if($count == 0 && $_POST["itemId"] != ""){
           $sql = "INSERT INTO userCart (userId) VALUES ('$unId')";
           $conn -> exec($sql);
@@ -73,7 +75,6 @@
         if($count == 0){
           $sql = "INSERT INTO userCart (userId) VALUES ('$unId')";
           $conn -> exec($sql);
-          print "<meta http-equiv = 'refresh' content = '0; url = cart.php' />";
         }
 
         if($_POST["itemId"] != ""){
@@ -81,6 +82,8 @@
           $conn -> exec($sql);
           print "<meta http-equiv = 'refresh' content = '0; url = cart.php' />";
         }
+
+
 
         print "<div class='itemCartAssets'>";
         print "<div class='itemCartText'>";
@@ -111,28 +114,24 @@
         $taxPrice = round(($priceTotal*7.25)/100, 2);
         print "<div class='itemPrice'>Tax: $".$taxPrice."</div>";
         $totalPrice = round($priceTotal + $taxPrice, 2);
-        print "<div class='itemPrice'>Total: $".$totalPrice."</div>";
-        print "<div><hr></div>";
-
-        print "<div class='itemCartButtons'>";
-
-        print "<div>";
-        print "
+        print "<div class='itemPrice'>Total: $".$totalPrice."</div>
+          <div>
+          <hr>
+          </div>
+          <div class='itemCartButtons'>
+          <div>
           <form action='checkout.php' method='post'>
             <input type='submit' value='Checkout' class='itemButtonCheckout'>
           </form></div>
-        ";
-
-        print "</div>";
-        print "</div>";
-
-        print "</div>";
-
-        print "<div class='cartDeleteButton'>
+        </div>
+        </div>
+        </div>
+        <div class='cartDeleteButton'>
         <form method='post' action='cart.php'>
           <input type='submit' name='cartDelete' value='Delete Cart'>
         </form></div>
         ";
+
 
       }
       catch(PDOException $e) {
