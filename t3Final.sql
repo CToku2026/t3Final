@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 15, 2025 at 06:58 PM
+-- Generation Time: May 29, 2025 at 09:34 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -75,16 +75,16 @@ CREATE TABLE `itemStore` (
 --
 
 INSERT INTO `itemStore` (`storeId`, `itemId`, `quantity`) VALUES
-(1, 1, 91),
-(2, 1, 54),
-(1, 2, 99),
-(2, 2, 86),
-(1, 3, 93),
-(2, 3, 49),
-(1, 4, 5),
-(2, 4, 56),
-(1, 5, 5),
-(2, 5, 4);
+(1, 1, 85),
+(2, 1, 48),
+(1, 2, 89),
+(2, 2, 76),
+(1, 3, 92),
+(2, 3, 48),
+(1, 4, 4),
+(2, 4, 55),
+(1, 5, 2),
+(2, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -179,13 +179,13 @@ ALTER TABLE `stores`
 -- AUTO_INCREMENT for table `userCart`
 --
 ALTER TABLE `userCart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
